@@ -4,8 +4,8 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
-
-
+const passport = require("../config/passport")
+console.log(passport)
 
 function getIndexPage(req, res) {
     res.render("index");
@@ -35,7 +35,7 @@ async function signUpUser(req, res) {
     const userData = req.body;
     const result = await prisma.user.findUnique({
             where: {
-                email: userData.username, // Assuming username is the email
+                email: userData.username, 
             },
     });
 
@@ -57,10 +57,14 @@ async function signUpUser(req, res) {
                 password: hashedPassword
             }
         });
-        res.redirect("/");
+        res.redirect("/log-in");
     } catch (err) {
         console.error(err);
     }
+}
+
+function getlogIn(req, res) {
+    res.render("log-in", {errors: [], successMessage: "", formData: {}})
 }
 
 process.on('SIGINT', async () => {
@@ -76,5 +80,6 @@ process.on('SIGTERM', async () => {
 module.exports = {
     getIndexPage,
     getSignUpForm,
-    signUpUser
+    signUpUser,
+    getlogIn,
 }  
