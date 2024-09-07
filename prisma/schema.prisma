@@ -26,4 +26,29 @@ model User {
   last_name  String @db.VarChar(100)
   email      String @unique @db.VarChar(100)
   password   String @db.Char(60)
+
+  folders Folder[]
+  files   File[]
+}
+
+model Folder {
+  id            Int      @id @default(autoincrement())
+  folder_name   String   @unique
+  created_by    Int
+  createdAt     DateTime @default(now())
+  modifiedAt    DateTime @updatedAt
+  files         File[]
+  createdByUser User?    @relation(fields: [created_by], references: [id])
+}
+
+model File {
+  id         Int      @id @default(autoincrement()) // Primary key
+  file_name  String
+  folder     Folder   @relation(fields: [folderId], references: [id])
+  folderId   Int
+  created_by String
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  user User[]
 }

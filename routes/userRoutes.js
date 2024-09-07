@@ -52,4 +52,6 @@ router.post("/create-folder", fileController.createFolder);
 
 router.post("/upload", isAuthenticated, upload.single('uploaded_file'), fileController.uploadFile); 
 
+router.get("/folders/:folder_name", fileController.getFolder)
+
 module.exports = router;

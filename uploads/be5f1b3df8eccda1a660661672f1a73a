@@ -1,0 +1,13 @@
+<FlexQueryResponse queryName="Davkomat" type="AF">
+<FlexStatements count="1">
+<FlexStatement accountId="U16058905" fromDate="20240101" toDate="20240906" period="YearToDate" whenGenerated="20240907;060935">
+<AccountInformation accountId="U16058905" ibEntity="IB-IE" />
+<Trades>
+<Trade accountId="U16058905" acctAlias="" model="" currency="EUR" fxRateToBase="1" assetCategory="STK" subCategory="ETF" symbol="VWCE" description="VANG FTSE AW USDA" conid="375858281" securityID="IE00BK5BQT80" securityIDType="ISIN" cusip="" isin="IE00BK5BQT80" figi="BBG00PQQJ374" listingExchange="IBIS2" underlyingConid="" underlyingSymbol="" underlyingSecurityID="" underlyingListingExchange="" issuer="" issuerCountryCode="IE" tradeID="810653211" multiplier="1" relatedTradeID="" strike="" reportDate="20240906" expiry="" dateTime="20240906;110409" putCall="" tradeDate="20240906" principalAdjustFactor="" settleDateTarget="20240910" transactionType="ExchTrade" exchange="GETTEX2" quantity="3" tradePrice="119.28" tradeMoney="357.84" proceeds="-357.84" taxes="0" ibCommission="-1.25" ibCommissionCurrency="EUR" netCash="-359.09" closePrice="118.84" openCloseIndicator="O" notes="" cost="359.09" fifoPnlRealized="0" mtmPnl="-1.32" origTradePrice="0" origTradeDate="" origTradeID="" origOrderID="0" origTransactionID="0" buySell="BUY" clearingFirmID="" ibOrderID="676835793" transactionID="3051575579" ibExecID="0000d349.66daa890.01.01" relatedTransactionID="" rtn="" brokerageOrderID="00e9b484.0001b0f4.66da8683.0001" orderReference="" volatilityOrderLink="" exchOrderId="N/A" extExecID="281385502" orderTime="20240906;110409" openDateTime="" holdingPeriodDateTime="" whenRealized="" whenReopened="" levelOfDetail="EXECUTION" changeInPrice="0" changeInQuantity="0" orderType="MKT" traderID="" isAPIOrder="N" accruedInt="0" initialInvestment="" serialNumber="" deliveryType="" commodityType="" fineness="0.0" weight="0.0" />
+</Trades><CorporateActions>
+</CorporateActions><SecuritiesInfo>
+<SecurityInfo currency="EUR" assetCategory="STK" subCategory="ETF" symbol="VWCE" description="VANG FTSE AW USDA" conid="375858281" securityID="IE00BK5BQT80" securityIDType="ISIN" cusip="" isin="IE00BK5BQT80" figi="BBG00PQQJ374" listingExchange="IBIS2" underlyingConid="" underlyingSymbol="" underlyingSecurityID="" underlyingListingExchange="" issuer="" issuerCountryCode="IE" multiplier="1" strike="" expiry="" putCall="" principalAdjustFactor="" maturity="" issueDate="" underlyingCategory="" settlementPolicyMethod="" code="" serialNumber="" deliveryType="" commodityType="" fineness="0.0" weight="0.0" />
+</SecuritiesInfo>
+</FlexStatement>
+</FlexStatements>
+</FlexQueryResponse>

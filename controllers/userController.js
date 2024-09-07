@@ -8,21 +8,17 @@ const fs = require("fs");
 const path = require("path")
 
 
-function getIndexPage(req, res) {
+async function getIndexPage(req, res) {
     const user = req.user.first_name + " " + req.user.last_name;
     const uploadDir = path.join(__dirname, '../uploads');
 
-    fs.readdir(uploadDir, (err, folders) => {
-        if (err) {
-            return res.status(500).send('Unable to scan directory');
-        }
-
-        if (folders.length === 0) {
-            res.render("index", { loggedIn: req.isAuthenticated(), user, folders: [] });
-        }
-        res.render('index', {loggedIn: req.isAuthenticated, folders, user });
-    });
+    const folders = await prisma.folder.findMany()
     
+
+    if (folders.length === 0) {
+        res.render("index", { loggedIn: req.isAuthenticated(), user, folders: [], errors: ""  });
+    }
+    res.render('index', {loggedIn: req.isAuthenticated, folders, user, errors: "" });
 }
 
 function getSignUpForm(req, res) {

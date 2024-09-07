@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome to <%= folder_name %> folder
+     <!-- File Upload -->
+    <div id="upload-file">
+        <div id="files">
+            <ul>
+                <% files.forEach(file => { %>
+                    <li><%= file %></li>
+                <% }) %>
+            </ul>
+        </div>
+        <h4>Upload New File</h4>
+        <form action="/folders" method="post" enctype="multipart/form-data">
+            <label for="file">Choose file to upload:</label>
+            <input type="file" id="uploaded_file" name="uploaded_file" multiple />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
