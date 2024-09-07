@@ -4,9 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
+    <nav>
+        <a href="/log-out">LOG OUT</a>
+    </nav>
     <h1>INDEX</h1>
-    <a href="sign-up">SIGN UP HERE</a>
+    <% if (loggedIn) { %>
+    <div class="container">
+        <div>
+            <p>Welcome <%= `${user}` %></p>
+
+            <!-- Folder Creation -->
+            <div id="folders">
+                <h4>Folders</h4>
+                <form action="/create-folder" method="post">
+                    <input type="text" name="folderName" placeholder="New folder name" required>
+                    <button type="submit">Create Folder</button>
+                </form>
+            </div>
+
+            <!-- File Upload -->
+            <p>Upload file here:</p>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for="folder">Select folder:</label>
+                    <select name="folder" id="folder">
+                        <% folders.forEach(folder => { %>
+                            <option value="<%= folder %>"><%= folder %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div>
+                    <label for="file">Choose file to upload:</label>
+                    <input type="file" id="uploaded_file" name="uploaded_file" multiple />
+                </div>
+                <button>Submit</button>
+            </form>
+        </div>
+    </div>
+    <% } else { %>
+        <a href="/sign-up">SIGN UP HERE</a>
+        <a href="/log-in">LOG IN HERE</a>
+    <% } %>
 </body>
 </html>

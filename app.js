@@ -5,6 +5,7 @@ const passport = require('./config/passport');
 const routes = require('./routes/userRoutes');
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const { PrismaClient } = require('@prisma/client');
+const path = require("path")
 
 const app = express();
 const prisma = new PrismaClient(); // Single instance
@@ -12,6 +13,8 @@ const prisma = new PrismaClient(); // Single instance
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(session({
     cookie: {

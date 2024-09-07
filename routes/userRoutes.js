@@ -1,10 +1,15 @@
 const express = require("express")
 const router = express.Router();
 const userController = require("../controllers/userController");
+const fileController = require("../controllers/fileController")
 const passport = require("../config/passport");
+const { isAuthenticated } = require("../middleware/isAuthenticated");
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 
-router.get("/", userController.getIndexPage);
+router.get("/", isAuthenticated, userController.getIndexPage);
+router.post("/", isAuthenticated, upload.single('uploaded_file'), userController.getIndexPage);
 
 router.get("/sign-up", userController.getSignUpForm);
 router.post("/sign-up", userController.signUpUser);
@@ -13,7 +18,6 @@ router.get("/log-in", userController.getlogIn);
 router.post(
     "/log-in",
     (req, res, next) => {
-        console.log(passport)
         passport.authenticate("local", (err, user, info) => {
             if (err) {
                 return next(err); 
@@ -34,5 +38,18 @@ router.post(
         })(req, res, next);
     }
 );
+
+router.get("/log-out", (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/");
+    });
+});
+
+router.post("/create-folder", fileController.createFolder);
+
+router.post("/upload", isAuthenticated, upload.single('uploaded_file'), fileController.uploadFile); 
 
 module.exports = router;
