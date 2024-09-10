@@ -1,7 +1,6 @@
-const fs = require('fs');
-const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
+const cloudinary = require("../config/cloudinary")
 
 async function createFolder(req, res) {
     const folderName = req.body.folderName;
@@ -66,8 +65,8 @@ async function getFolder(req, res) {
             return res.status(404).send('Folder not found');
         }
         res.render("folder", {
-            folder_name: folder.folder_name,
-            files: folder.files  
+            folder: folder,
+            files: folder.files.map(file => file.file_name)
         });
     } catch (error) {
         console.error('Error retrieving folder and files:', error);
@@ -76,22 +75,40 @@ async function getFolder(req, res) {
 }
 
 
-function uploadFile(req, res) {
-    const folderName = req.body.folder || 'default';
-    const folderPath = path.join(__dirname, '../uploads', folderName);
-    
-    if (!fs.existsSync(folderPath)) {
-        return res.status(400).send('Folder does not exist');
+async function uploadFile(req, res) {
+    const file = req.file;
+    const folderId = parseInt(req.body.folderId);
+    const userId = req.user.id;
+    const folderName = req.body.folderName;
+
+    if (!file || !folderId || !userId) {
+        return res.status(400).json({ error: "Missing required data" });
     }
 
-    const file = req.file;
-    const targetPath = path.join(folderPath, file.originalname);
+    try {
+        const result = await cloudinary.uploader.upload(file.path, {
+            folder: `my_folder/${folderName}`, 
+            resource_type: 'auto',
+            public_id: file.originalname,
+        });
 
-    fs.rename(file.path, targetPath, (err) => {
-        if (err) return res.status(500).send('Error uploading file');
-        res.redirect('/');
-    });
+        await prisma.file.create({
+            data: {
+                file_name: file.originalname,
+                folderId: folderId,
+                created_by: userId,
+                cloudinary_url: result.secure_url, 
+            }
+        });
+
+        // Redirect to the folder view
+        res.redirect(`/folders/${folderName}`);
+    } catch (error) {
+        console.error("Error uploading file:", error);
+        res.status(500).json({ error: "Server Error" });
+    }
 }
+
 
 module.exports = {
     createFolder,

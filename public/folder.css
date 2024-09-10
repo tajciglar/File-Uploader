@@ -1,0 +1,79 @@
+/* styles for folder view page */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1,
+h4 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#upload-file {
+    padding: 20px;
+    margin: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#files ul {
+    list-style: none;
+    padding: 0;
+}
+
+#files li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#files li a {
+    text-decoration: none;
+    color: #007bff;
+    display: block;
+}
+
+#files li a:hover {
+    text-decoration: underline;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+form input[type="file"] {
+    margin-bottom: 10px;
+}
+
+form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}

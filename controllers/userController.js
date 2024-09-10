@@ -1,22 +1,17 @@
-
 const db = require("../db/pool");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
-const fs = require("fs");
-const path = require("path")
-
 
 async function getIndexPage(req, res) {
+    console.log("...")
     const user = req.user.first_name + " " + req.user.last_name;
-    const uploadDir = path.join(__dirname, '../uploads');
 
     const folders = await prisma.folder.findMany()
-    
 
     if (folders.length === 0) {
-        res.render("index", { loggedIn: req.isAuthenticated(), user, folders: [], errors: ""  });
+        return res.render("index", { loggedIn: req.isAuthenticated(), user, folders: [], errors: ""  });
     }
     res.render('index', {loggedIn: req.isAuthenticated, folders, user, errors: "" });
 }

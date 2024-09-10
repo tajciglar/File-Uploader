@@ -8,7 +8,7 @@ const { PrismaClient } = require('@prisma/client');
 const path = require("path")
 
 const app = express();
-const prisma = new PrismaClient(); // Single instance
+const prisma = new PrismaClient(); 
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));

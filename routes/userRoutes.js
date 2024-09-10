@@ -24,7 +24,7 @@ router.post(
             }
             if (!user) {
                 return res.render("log-in", {
-                    message: info.message, 
+                    errors: info.message, 
                     formData: req.body,    
                     successMessage: ""     
                 });
@@ -50,8 +50,7 @@ router.get("/log-out", (req, res, next) => {
 
 router.post("/create-folder", fileController.createFolder);
 
-router.post("/upload", isAuthenticated, upload.single('uploaded_file'), fileController.uploadFile); 
+router.get("/folders/:folder_name", isAuthenticated, fileController.getFolder)
 
-router.get("/folders/:folder_name", fileController.getFolder)
-
+router.post("/upload-file",isAuthenticated, upload.single('uploaded_file'), fileController.uploadFile)
 module.exports = router;

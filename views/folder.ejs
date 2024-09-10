@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/folder.css">
 </head>
 <body>
-    Welcome to <%= folder_name %> folder
-     <!-- File Upload -->
+    Welcome to <%= folder.folder_name %>'s folder
     <div id="upload-file">
         <div id="files">
             <ul>
                 <% files.forEach(file => { %>
-                    <li><%= file %></li>
+                   <a><li><%= file %></li></a>
                 <% }) %>
             </ul>
         </div>
-        <h4>Upload New File</h4>
-        <form action="/folders" method="post" enctype="multipart/form-data">
+        <form action="/upload-file" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="folderId" value="<%= folder.id %>" />
+            <input type="hidden" name="folderName" value="<%= folder.folder_name %>" />
             <label for="file">Choose file to upload:</label>
             <input type="file" id="uploaded_file" name="uploaded_file" multiple />
             <button type="submit">Submit</button>

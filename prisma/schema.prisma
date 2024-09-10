@@ -42,13 +42,14 @@ model Folder {
 }
 
 model File {
-  id         Int      @id @default(autoincrement()) // Primary key
-  file_name  String
-  folder     Folder   @relation(fields: [folderId], references: [id])
-  folderId   Int
-  created_by String
-  createdAt  DateTime @default(now())
-  modifiedAt DateTime @updatedAt
+  id             Int      @id @default(autoincrement()) // Primary key
+  file_name      String
+  folder         Folder   @relation(fields: [folderId], references: [id])
+  folderId       Int
+  created_by     Int // Change to Int if it represents a user ID
+  createdAt      DateTime @default(now())
+  modifiedAt     DateTime @updatedAt
+  cloudinary_url String?
 
-  user User[]
+  user User @relation(fields: [created_by], references: [id]) // Adjust relation if needed
 }
