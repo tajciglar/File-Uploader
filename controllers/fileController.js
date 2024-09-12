@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
-const cloudinary = require("../config/cloudinary")
+const cloudinary = require("../config/cloudinary");
+const { reduceEachTrailingCommentRange } = require('typescript');
 
 async function createFolder(req, res) {
     const folderName = req.body.folderName;
@@ -52,6 +53,8 @@ async function getFolder(req, res) {
     const folderName = req.params.folder_name;
 
     try {
+        const folders = prisma.folder.findMany();
+        console.log(folders)
         const folder = await prisma.folder.findUnique({
             where: {
                 folder_name: folderName
@@ -87,7 +90,7 @@ async function uploadFile(req, res) {
 
     try {
         const result = await cloudinary.uploader.upload(file.path, {
-            folder: `my_folder/${folderName}`, 
+            folder: `${folderName}`, 
             resource_type: 'auto',
             public_id: file.originalname,
         });
@@ -101,7 +104,7 @@ async function uploadFile(req, res) {
             }
         });
 
-        // Redirect to the folder view
+        
         res.redirect(`/folders/${folderName}`);
     } catch (error) {
         console.error("Error uploading file:", error);
@@ -109,9 +112,33 @@ async function uploadFile(req, res) {
     }
 }
 
+async function deleteFolder(req, res) {
+    const folderId = parseInt(req.params.folderId, 10);
+
+    try {
+        await prisma.file.deleteMany({
+            where: {
+                folderId: folderId
+            }
+        });
+        await prisma.folder.delete({
+            where: {
+                id: folderId
+            }
+        });
+
+        return res.redirect("/");
+    } catch (error) {
+        console.error("Error deleting folder and files:", error);
+        return res.status(500).json({ error: "Server Error" });
+    }
+}
+
+
 
 module.exports = {
     createFolder,
     uploadFile,
-    getFolder
+    getFolder,
+    deleteFolder
 }

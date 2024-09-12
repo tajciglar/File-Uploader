@@ -15,7 +15,6 @@
     <% if (errors) { %>
         <p><% errors %></p>
     <% } %>
-    <!-- Folder Information Table -->
     <% if (folders.length > 0) { %>
         <table border="1">
             <thead>
@@ -28,7 +27,12 @@
                 <% folders.forEach(folder => { %>
                     <tr>
                         <td><a href="/folders/<%= folder.folder_name %>"><%= folder.folder_name %></a></td>
-                        <td><%= folder.createdAt %></td>
+                        <td class="delete-folder">
+                            <%= folder.createdAt %>
+                            <form action="/delete-folder/<%= folder.id %>" method="POST" class="delete-form">
+                                <button type="submit">DELETE</button>
+                            </form>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>
@@ -45,7 +49,5 @@
             <button type="submit">Create Folder</button>
         </form>
     </div>
-
-    <script src="/assets/scripts.js"></script>
 </body>
 </html>

@@ -5,10 +5,9 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
 async function getIndexPage(req, res) {
-    console.log("...")
     const user = req.user.first_name + " " + req.user.last_name;
 
-    const folders = await prisma.folder.findMany()
+    const folders = await prisma.folder.findMany();
 
     if (folders.length === 0) {
         return res.render("index", { loggedIn: req.isAuthenticated(), user, folders: [], errors: ""  });

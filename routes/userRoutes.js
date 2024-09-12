@@ -53,4 +53,6 @@ router.post("/create-folder", fileController.createFolder);
 router.get("/folders/:folder_name", isAuthenticated, fileController.getFolder)
 
 router.post("/upload-file",isAuthenticated, upload.single('uploaded_file'), fileController.uploadFile)
+
+router.post("/delete-folder/:folderId", isAuthenticated, fileController.deleteFolder)
 module.exports = router;
